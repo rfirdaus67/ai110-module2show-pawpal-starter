@@ -18,6 +18,7 @@ class Task {
     +int duration_minutes
     +int priority
     +bool completed
+    +Pet pet
     +mark_complete()
 }
 
@@ -29,6 +30,8 @@ class Planner {
     +get_total_duration()
 }
 
+
 Owner "1" --> "0..*" Pet : owns
+Pet "1" --> "0..*" Task : has
 Planner "1" --> "0..*" Task : manages
 Planner ..> Owner : generates plan for

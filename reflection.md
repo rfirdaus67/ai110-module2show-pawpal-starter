@@ -2,17 +2,38 @@
 
 ## 1. System Design
 
+1. Add a pet and owner
+2. Allow the owner to label their available times that day
+3. Schedule a walk
+4. Make a task list
+
+Classes:
+1. Owner
+    - Attributes: name, available_start, available_end, pets
+    - Methods: add_pet(pet)
+2. Pet
+   - Attributes: name, species
+3. Task
+    - Attributes: title, duration_minutes, priority, completed
+    - Methods: mark_complete()
+4. Planner
+    - Attributes: tasks
+    - Methods: add_task(task), generate_plan(owner), explain_plan(), get_total_duration()
+    
 **a. Initial design**
 
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
+
+My initial UML design had four classes, an Owner class, Pet class, Task class, and Planner class. The Owner class stores the owner's name, available times, and list of pets. The Pet class stores basic information stores the pet name and species. The Task class represents tasks like walks or feeding and keeps track of their duration, priority, and completion. The Planner class is responsible for managing tasks and creates a schedule based on the owner's availability, explains the plan, and calculates the total time needed for the specified tasks.
+
 
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
 
----
+No, my design did not change during implementation because the original UML design was pretty clear on the relationship between the Owner, Pet, Tasks, and Planner classes. I also made sure to keep my diagram and plan as simple as I could without lacking, so it had didn't include any unnecessary elements. 
 
 ## 2. Scheduling Logic and Tradeoffs
 

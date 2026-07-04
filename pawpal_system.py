@@ -13,6 +13,7 @@ class Task:
     duration_minutes: int
     priority: int
     completed: bool = False
+    pet: Pet
 
     def mark_complete(self):
         """Marks the task as completed."""
