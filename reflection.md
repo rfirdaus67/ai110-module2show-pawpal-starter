@@ -33,7 +33,7 @@ My initial UML design had four classes, an Owner class, Pet class, Task class, a
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
 
-No, my design did not change during implementation because the original UML design was pretty clear on the relationship between the Owner, Pet, Tasks, and Planner classes. I also made sure to keep my diagram and plan as simple as I could without lacking, so it had didn't include any unnecessary elements. 
+Yes, I made one change which was adding a Pet object under each Task. That way, it is less vague which task is referring to which pet if an owner has multiple pets and a task is linked to a specific pet.
 
 ## 2. Scheduling Logic and Tradeoffs
 
