@@ -1,0 +1,34 @@
+classDiagram
+
+class Owner {
+    +String name
+    +String available_start
+    +String available_end
+    +Pet[] pets
+    +add_pet(pet)
+}
+
+class Pet {
+    +String name
+    +String species
+}
+
+class Task {
+    +String title
+    +int duration_minutes
+    +int priority
+    +bool completed
+    +mark_complete()
+}
+
+class Planner {
+    +Task[] tasks
+    +add_task(task)
+    +generate_plan(owner)
+    +explain_plan()
+    +get_total_duration()
+}
+
+Owner "1" --> "0..*" Pet : owns
+Planner "1" --> "0..*" Task : manages
+Planner ..> Owner : generates plan for
