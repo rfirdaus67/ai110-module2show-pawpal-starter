@@ -1,11 +1,22 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 
-@dataclass
 class Pet:
-    name: str
-    species: str
+    def __init__(self, name, species):
+        self.name = name
+        self.species = species
+        self.tasks = []
 
+    @property
+    def task_count(self):
+        return len(self.tasks)
+
+    def add_task(self, task):
+        self.tasks.append(task)
+
+    def remove_task(self, task):
+        if task in self.tasks:
+            self.tasks.remove(task)
 
 
 @dataclass
@@ -14,7 +25,6 @@ class Task:
     time: str
     duration_minutes: int
     priority: int
-    pet: Pet
     completed: bool = False
 
     def mark_complete(self):
@@ -35,30 +45,28 @@ class Owner:
 
 
 class Planner:
-    def __init__(self):
-        self.tasks: list[Task] = []
+    def add_task(self, pet: Pet, task: Task):
+        """Assigns a task to a pet so the pet stores its own tasks."""
+        pet.add_task(task)
 
-    def add_task(self, task: Task):
-        """Adds a task to the planner."""
-        self.tasks.append(task)
+    def print_summary(self, pets):
+        print("\n--- Today's Schedule ---")
 
+        # Gather every task across all pets and order by priority (1 = highest, at top)
+        all_tasks = [(pet, task) for pet in pets for task in pet.tasks]
+        all_tasks.sort(key=lambda pair: pair[1].priority)
 
-    def generate_plan(self, owner: Owner):
-        """Generates a plan based on the owner's availability."""
-        self.tasks.sort(key=lambda task: task.priority)
-
-    def explain_plan(self):
-        """Explains the generated plan."""
-        print("Today's Schedule")
-        print("----------------")
-
-        for task in self.tasks:
-            status = "Completed" if task.completed else "Not Completed"
+        for pet, task in all_tasks:
+            status = "Completed" if task.completed else "Not completed"
             print(
-                f"{task.pet.name} ({task.time}) - "
-                f"{task.description} ({task.duration_minutes} mins) - {status}"
+                f" [Priority #{task.priority}] {pet.name}: {task.description} "
+                f"for {pet.name} at {task.time} ({task.duration_minutes} min) - {status}"
             )
 
-    def get_total_duration(self):
-        """Returns the total duration of all tasks."""
-        return sum(task.duration_minutes for task in self.tasks)
+        # --- Summary ---
+        total_all_duration = sum(task.duration_minutes for _, task in all_tasks)
+        print("\n--- Summary ---")
+
+        for pet in pets:
+            print(f"{pet.name}: {pet.task_count} tasks")
+        print(f"TOTAL DURATION (ALL PETS): {total_all_duration} minutes")

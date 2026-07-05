@@ -11,6 +11,10 @@ class Owner {
 class Pet {
     +String name
     +String species
+    +Task[] tasks
+    +int task_count
+    +add_task(task)
+    +remove_task(task)
 }
 
 class Task {
@@ -18,21 +22,16 @@ class Task {
     +String time
     +int duration_minutes
     +int priority
-    +Pet pet
     +bool completed
     +mark_complete()
 }
 
 class Planner {
-    +Task[] tasks
-    +add_task(task)
-    +generate_plan(owner)
-    +explain_plan()
-    +get_total_duration()
+    +add_task(pet, task)
+    +print_summary(pets)
 }
 
 
 Owner "1" --> "0..*" Pet : owns
 Pet "1" --> "0..*" Task : has
-Planner "1" --> "0..*" Task : manages
-Planner ..> Owner : generates plan for
+Planner ..> Pet : assigns tasks to

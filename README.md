@@ -44,7 +44,16 @@ pip install -r requirements.txt
 
 ## 🖥️ Sample Output
 
-Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
+
+--- Today's Schedule ---
+ [Priority #1] Buddy: Take Buddy for a Walk! for Buddy at 8:00 am (30 min) - Not completed
+ [Priority #2] Mittens: Feed Mittens her breakfast for Mittens at 9:00 am (10 min) - Not completed
+ [Priority #3] Buddy: Take Buddy for a Walk! for Buddy at 5:00 pm (30 min) - Not completed
+
+--- Summary ---
+Buddy: 2 tasks
+Mittens: 1 tasks
+TOTAL DURATION (ALL PETS): 70 minutes
 
 ```
 # e.g.:
