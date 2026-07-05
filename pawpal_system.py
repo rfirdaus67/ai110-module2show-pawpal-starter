@@ -1,3 +1,4 @@
+from asyncio import all_tasks
 from dataclasses import dataclass
 
 
@@ -28,7 +29,7 @@ class Task:
     description: str
     time: str
     duration_minutes: int
-    priority: int
+    priority: str
     completed: bool = False
 
     def mark_complete(self):
@@ -60,20 +61,26 @@ class Planner:
 
         # Gather every task across all pets and order by priority (1 = highest, at top)
         all_tasks = [(pet, task) for pet in pets for task in pet.tasks]
-        all_tasks.sort(key=lambda pair: pair[1].priority)
+        priority_order = {
+            "high": 1,
+             "medium": 2,
+            "low": 3
+        }
+        all_tasks.sort(key=lambda pair: priority_order[pair[1].priority])
 
         for pet, task in all_tasks:
             status = "Completed" if task.completed else "Not completed"
             print(
-                f" [Priority #{task.priority}] {pet.name}: {task.description} "
-                f"for {pet.name} at {task.time} ({task.duration_minutes} min) - {status}"
-            ) 
+                f"[{task.priority.capitalize()} Priority] "
+                f"{pet.name}: {task.description} "
+                f"at {task.time} ({task.duration_minutes} min) - {status}"
+            )
 
         print("\n--- Plan Explanation ---")
         for pet, task in all_tasks:
             print(
                 f"- {pet.name}'s '{task.description}' is scheduled at {task.time} "
-                f"because it has priority #{task.priority}. "
+                f"because it is a {task.priority} priority task. "
                 f"It takes {task.duration_minutes} minutes."
             )
 
