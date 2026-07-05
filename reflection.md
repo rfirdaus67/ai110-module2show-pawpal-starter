@@ -33,7 +33,7 @@ My initial UML design had four classes, an Owner class, Pet class, Task class, a
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
 
-Yes, I made one change which was adding a Pet object under each Task. That way, it is less vague which task is referring to which pet if an owner has multiple pets and a task is linked to a specific pet.
+Yes, I made one change which was adding a Pet object under each Task. That way, it is less vague which task is referring to which pet if an owner has multiple pets and a task is linked to a specific pet. I also added time, so the user can plan ahead of time when they are supposed to be completing that task, in addition to the duration. Also changed the "title" attribute for the Task class to "description" because the description would be saying the same thing and allowing for more notes/details by the user.
 
 ## 2. Scheduling Logic and Tradeoffs
 

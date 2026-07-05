@@ -7,17 +7,19 @@ class Pet:
     species: str
 
 
+
 @dataclass
 class Task:
-    title: str
+    description: str
+    time: str
     duration_minutes: int
     priority: int
-    completed: bool = False
     pet: Pet
+    completed: bool = False
 
     def mark_complete(self):
         """Marks the task as completed."""
-        pass
+        self.completed = True
 
 
 class Owner:
@@ -29,7 +31,7 @@ class Owner:
 
     def add_pet(self, pet: Pet):
         """Adds a pet to the owner's list of pets."""
-        pass
+        self.pets.append(pet)
 
 
 class Planner:
@@ -38,16 +40,25 @@ class Planner:
 
     def add_task(self, task: Task):
         """Adds a task to the planner."""
-        pass
+        self.tasks.append(task)
+
 
     def generate_plan(self, owner: Owner):
         """Generates a plan based on the owner's availability."""
-        pass
+        self.tasks.sort(key=lambda task: task.priority)
 
     def explain_plan(self):
         """Explains the generated plan."""
-        pass
+        print("Today's Schedule")
+        print("----------------")
+
+        for task in self.tasks:
+            status = "Completed" if task.completed else "Not Completed"
+            print(
+                f"{task.pet.name} ({task.time}) - "
+                f"{task.description} ({task.duration_minutes} mins) - {status}"
+            )
 
     def get_total_duration(self):
         """Returns the total duration of all tasks."""
-        pass
+        return sum(task.duration_minutes for task in self.tasks)
