@@ -50,6 +50,11 @@ pip install -r requirements.txt
  [Priority #2] Mittens: Feed Mittens her breakfast for Mittens at 9:00 am (10 min) - Not completed
  [Priority #3] Buddy: Take Buddy for a Walk! for Buddy at 5:00 pm (30 min) - Not completed
 
+--- Plan Explanation ---
+- Buddy's 'Take Buddy for a Walk!' is scheduled at 8:00 am because it has priority #1. It takes 30 minutes.
+- Mittens's 'Feed Mittens her breakfast' is scheduled at 9:00 am because it has priority #2. It takes 10 minutes.
+- Buddy's 'Take Buddy for a Walk!' is scheduled at 5:00 pm because it has priority #3. It takes 30 minutes.
+
 --- Summary ---
 Buddy: 2 tasks
 Mittens: 1 tasks

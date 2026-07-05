@@ -67,6 +67,14 @@ class Planner:
             print(
                 f" [Priority #{task.priority}] {pet.name}: {task.description} "
                 f"for {pet.name} at {task.time} ({task.duration_minutes} min) - {status}"
+            ) 
+
+        print("\n--- Plan Explanation ---")
+        for pet, task in all_tasks:
+            print(
+                f"- {pet.name}'s '{task.description}' is scheduled at {task.time} "
+                f"because it has priority #{task.priority}. "
+                f"It takes {task.duration_minutes} minutes."
             )
 
         # --- Summary ---
