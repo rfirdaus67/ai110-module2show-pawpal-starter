@@ -42,12 +42,14 @@ Yes, I made one change which was adding a Pet object under each Task. That way, 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
 - How did you decide which constraints mattered most?
 
+My scheduler considers time and priority the most. I decided that time mattered the most because I could either choose to have tasks be organized top to bottom based on time or priority. However, I felt time was more important here because it's easier for the user to read through and they have a timeline they can check off as their day goes on. I felt this allowed for better readability than priority. 
+
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
 
----
+One tradeoff my schedular makes is that the schedule only advances (especially for daily and weekly tasks) when you check task's off. Also to make the schedule not look so clunky, while it would make sense to keep displaying incoming tasks for repeating daily/weekly tasks, I chose to keep it strictly to "Today's Schedule". So if a task doesn't get checked off, then tomorrow's task never gets created and won't display. This goes against the whole point of the daily/weekly task system.
 
 ## 3. AI Collaboration
 

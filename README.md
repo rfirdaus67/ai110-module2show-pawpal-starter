@@ -90,10 +90,10 @@ Sample test output:
 
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting | sort_tasks_by_time(pets), _collect_tasks(pets)| 1st method returns (pet, task) pair and since task.time is stored, sorts the tasks by time. The 2nd method is a helper method that makes pets' task lists into one list and keeps each task tied to its pet. |
+| Filtering | Planner.filter_tasks(pets, pet_name=None, completed=None, priority=None)| filters based on completion status, priority and which pet the task belongs to |
+| Conflict handling | detect_conflicts(pets), conflict_warnings(pets) | Collects tasks, dropping completed ones and sorts them by due date and time. If two task pairs overlap, gives an error. 2nd method displays the message on the UI. App.py calls this. |
+| Recurring tasks | mark_task_complete(pet, task), next_due_date()| Marks the task as done. if its recurring, the method builds a fresh, incomplete copy with the due_date set to the next day depending if its daily/weekly. 2nd method finds the next due date if the task i s daily/weekly.|
 
 ## 📸 Demo Walkthrough
 
