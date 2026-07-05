@@ -3,18 +3,22 @@ from dataclasses import dataclass
 
 class Pet:
     def __init__(self, name, species):
+        """Creates a pet with a name, species, and an empty task list."""
         self.name = name
         self.species = species
         self.tasks = []
 
     @property
     def task_count(self):
+        """Returns the number of tasks assigned to this pet."""
         return len(self.tasks)
 
     def add_task(self, task):
+        """Adds a task to this pet's task list."""
         self.tasks.append(task)
 
     def remove_task(self, task):
+        """Removes a task from this pet's task list if present."""
         if task in self.tasks:
             self.tasks.remove(task)
 
@@ -34,6 +38,7 @@ class Task:
 
 class Owner:
     def __init__(self, name: str, available_start: str, available_end: str):
+        """Creates an owner with a name, availability window, and no pets."""
         self.name = name
         self.available_start = available_start
         self.available_end = available_end
@@ -50,6 +55,7 @@ class Planner:
         pet.add_task(task)
 
     def print_summary(self, pets):
+        """Prints all tasks sorted by priority, then a per-pet and total summary."""
         print("\n--- Today's Schedule ---")
 
         # Gather every task across all pets and order by priority (1 = highest, at top)
