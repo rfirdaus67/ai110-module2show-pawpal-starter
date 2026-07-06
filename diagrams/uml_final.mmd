@@ -1,0 +1,49 @@
+classDiagram
+
+class Owner {
+    +String name
+    +String available_start
+    +String available_end
+    +Pet[] pets
+    +add_pet(pet)
+}
+
+class Pet {
+    +String name
+    +String species
+    +Task[] tasks
+    +int task_count
+    +add_task(task)
+    +remove_task(task)
+}
+
+class Task {
+    +String description
+    +int time
+    +int duration_minutes
+    +String priority
+    +bool completed
+    +String recurrence
+    +date due_date
+    +int end_minutes
+    +mark_complete()
+    +next_due_date() date
+    +overlaps(other) bool
+}
+
+class Planner {
+    +add_task(pet, task)
+    +mark_task_complete(pet, task) Task
+    +sort_tasks_by_time(pets)
+    +filter_tasks(pets, pet_name, completed, priority)
+    +detect_conflicts(pets)
+    +conflict_warnings(pets)
+    +print_summary(pets)
+    -_collect_tasks(pets)
+}
+
+
+Owner "1" --> "0..*" Pet : owns
+Pet "1" --> "0..*" Task : has
+Planner ..> Pet : reads/assigns tasks
+Planner ..> Task : sorts, completes, detects conflicts

@@ -113,6 +113,7 @@ tests/test_pawpal.py::test_detect_conflicts_ignores_same_time_on_different_days 
 tests/test_pawpal.py::test_detect_conflicts_pet_with_no_tasks PASSED                                                                                            [100%]
 
 ========================================================================= 13 passed in 0.03s ==========================================================================
+```
 
 System Confidence: ⭐️⭐️⭐️⭐️ (4 stars out of 5)
 
@@ -131,10 +132,43 @@ System Confidence: ⭐️⭐️⭐️⭐️ (4 stars out of 5)
 
 Describe your app in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Input your name and availability at the top as a Pet Owner
+2. Add your pets, their names and whether they're a dog, cat, or other species
+3. Assign tasks to a certain pet and set a time, duration, priority level and recurrance for it. Then use the "Add Task" button to put it into the system.
+4. See pending tasks for the day and mark them as complete with the "Complete task ✅" button
+5. Generate a schedule summary to see pending tasks, tasks for each pet, and total task duration with the "Generate schedule summary" button
+6. Filter tasks by Pet, Status (completed or to do), and priority to organize any tasks for better readability. Use the dropdowns for Pet, Status and priority and see results in a table!
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+Example workflow: Input your info as the owner --> add your pets --> assign tasks --> generate a schedule summary --> mark tests as complete as you go --> filter tasks to see completed tasks or tasks to do
+
+Key Scheduler behaviors: Tasks are automatically shown in order of when they should occur from top to bottom, shows a conflict warning if any overlap occurs, and can filter tasks based on pet, status and priority
+
+```
+Example Output:
+
+--- Today's Schedule (by time) ---
+[High Priority] Buddy: Take Buddy for a walk on 2026-07-05 at 8:00 am (30 min) - Not completed [repeats daily]
+[High Priority] Mittens: Give Mittens her medicine on 2026-07-05 at 8:10 am (5 min) - Not completed
+[Medium Priority] Mittens: Feed Mittens her breakfast on 2026-07-05 at 9:00 am (10 min) - Not completed
+[Low Priority] Buddy: Evening walk on 2026-07-05 at 5:00 pm (30 min) - Not completed [repeats daily]
+
+--- Conflicts ---
+! Buddy's 'Take Buddy for a walk' (8:00 am) overlaps Mittens's 'Give Mittens her medicine' (8:10 am)
+
+--- Plan Explanation ---
+- Buddy's 'Take Buddy for a walk' is scheduled at 8:00 am because it is a high priority task. It takes 30 minutes.
+- Mittens's 'Give Mittens her medicine' is scheduled at 8:10 am because it is a high priority task. It takes 5 minutes.
+- Mittens's 'Feed Mittens her breakfast' is scheduled at 9:00 am because it is a medium priority task. It takes 10 minutes.
+- Buddy's 'Evening walk' is scheduled at 5:00 pm because it is a low priority task. It takes 30 minutes.
+
+--- Summary ---
+Buddy: 2 tasks
+Mittens: 2 tasks
+TOTAL DURATION (ALL PETS): 75 minutes
+
+--- High-priority tasks only ---
+Buddy: Take Buddy for a walk
+Mittens: Give Mittens her medicine
+```
+
+**Screenshot or video** *(optional)*: <!-- ![alt text](task_list.png) -->

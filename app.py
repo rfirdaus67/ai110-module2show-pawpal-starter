@@ -10,36 +10,9 @@ st.set_page_config(page_title="PawPal+", page_icon="🐾", layout="centered")
 st.title("🐾 PawPal+")
 
 st.markdown(
-    """
-Welcome to the PawPal+ starter app.
-
-This file is intentionally thin. It gives you a working Streamlit app so you can start quickly,
-but **it does not implement the project logic**. Your job is to design the system and build it.
-
-Use this app as your interactive demo once your backend classes/functions exist.
-"""
+    "A pet care planning assistant. Add your pets and their care tasks, then build a "
+    "daily schedule that's sorted by time, flags conflicts, and handles recurring tasks."
 )
-
-with st.expander("Scenario", expanded=True):
-    st.markdown(
-        """
-**PawPal+** is a pet care planning assistant. It helps a pet owner plan care tasks
-for their pet(s) based on constraints like time, priority, and preferences.
-
-You will design and implement the scheduling logic and connect it to this Streamlit UI.
-"""
-    )
-
-with st.expander("What you need to build", expanded=True):
-    st.markdown(
-        """
-At minimum, your system should:
-- Represent pet care tasks (what needs to happen, how long it takes, priority)
-- Represent the pet and the owner (basic info and preferences)
-- Build a plan/schedule for a day that chooses and orders tasks based on constraints
-- Explain the plan (why each task was chosen and when it happens)
-"""
-    )
 
 st.divider()
 
@@ -109,34 +82,73 @@ st.divider()
 st.subheader("Build Today's Schedule 🗓️")
 st.caption("Sorts all tasks by time, flags scheduling conflicts, and prints a per-pet summary.")
 
-# Show any scheduling conflicts above the task list. conflict_warnings() never
-# raises, so a bad time can't crash the app.
-for message in planner.conflict_warnings(owner.pets):
-    st.warning(message)
+# --- Conflict detection ---
+# conflict_warnings() never raises, so a bad time can't crash the app.
+# Show a warning per overlap, or a green all-clear when there are none.
+warnings = planner.conflict_warnings(owner.pets)
+if warnings:
+    for message in warnings:
+        st.warning(f"⚠️ {message}")
+else:
+    st.success("✅ No scheduling conflicts — every task has its own time slot.")
 
-# List each task with a Complete button. Completing a daily/weekly task marks it
-# done and auto-creates its next occurrence. Only show tasks due today or earlier,
-# so an upcoming repeat stays hidden until its day and the list isn't cluttered
-# with tasks that aren't for today.
+# --- Sorted schedule (chronological, today or earlier) ---
+# sort_tasks_by_time() returns (pet, task) pairs ordered by start time. Upcoming
+# repeats are hidden until their day so the list isn't cluttered with future copies.
 today = date.today()
-for pet, task in planner.sort_tasks_by_time(owner.pets):
-    if task.due_date > today:
-        continue
-    row, action = st.columns([6, 1])
-    with row:
-        mark = "✅" if task.completed else "⬜️"
-        repeats = "" if task.recurrence == "none" else f" · repeats {task.recurrence}"
-        st.write(
-            f"{mark} **{task.description}** — {pet.name} · due {task.due_date} "
-            f"at {format_time(task.time)} · {task.duration_minutes} min · {task.priority}{repeats}"
-        )
-    with action:
-        # id(task) gives each button a stable, unique key even for same-named tasks.
-        if not task.completed and st.button("Complete", key=f"complete_{id(task)}"):
-            planner.mark_task_complete(pet, task)
-            st.rerun()
+schedule = [
+    (pet, task)
+    for pet, task in planner.sort_tasks_by_time(owner.pets)
+    if task.due_date <= today
+]
 
-if st.button("Generate schedule"):
+if schedule:
+    st.table(
+        [
+            {
+                "Status": "✅ Done" if task.completed else "⬜️ To do",
+                "Time": format_time(task.time),
+                "Task": task.description,
+                "Pet": pet.name,
+                "Due": str(task.due_date),
+                "Duration": f"{task.duration_minutes} min",
+                "Priority": task.priority.capitalize(),
+                "Repeats": "—" if task.recurrence == "none" else task.recurrence.capitalize(),
+            }
+            for pet, task in schedule
+        ]
+    )
+
+    # --- Recurrence ---
+    # Completing a daily/weekly task auto-creates its next occurrence. Pick an
+    # open task and complete it; the confirmation shows the next due date.
+    open_tasks = [(pet, task) for pet, task in schedule if not task.completed]
+    if open_tasks:
+        chosen = st.selectbox(
+            "Mark a task complete",
+            range(len(open_tasks)),
+            format_func=lambda i: (
+                f"{open_tasks[i][1].description} — {open_tasks[i][0].name} "
+                f"at {format_time(open_tasks[i][1].time)}"
+            ),
+        )
+        if st.button("Complete task ✅"):
+            pet, task = open_tasks[chosen]
+            new_task = planner.mark_task_complete(pet, task)
+            if new_task is not None:
+                st.success(
+                    f"Completed '{task.description}'. Next {task.recurrence} occurrence "
+                    f"scheduled for {new_task.due_date}."
+                )
+            else:
+                st.success(f"Completed '{task.description}'.")
+            st.rerun()
+    else:
+        st.info("All of today's tasks are done. 🎉")
+else:
+    st.info("No tasks scheduled for today yet. Add some above.")
+
+if st.button("Generate schedule summary"):
     # print_summary() writes to stdout, so capture it and show it as text.
     buffer = io.StringIO()
     with contextlib.redirect_stdout(buffer):
@@ -166,12 +178,19 @@ if owner.pets:
         owner.pets, pet_name=pet_name, completed=completed, priority=priority
     )
     if matches:
-        for pet, task in matches:
-            mark = "✅" if task.completed else "⬜️"
-            st.write(
-                f"{mark} **{task.description}** — {pet.name} · due {task.due_date} "
-                f"at {format_time(task.time)} · {task.priority}"
-            )
+        st.table(
+            [
+                {
+                    "Status": "✅ Done" if task.completed else "⬜️ To do",
+                    "Time": format_time(task.time),
+                    "Task": task.description,
+                    "Pet": pet.name,
+                    "Due": str(task.due_date),
+                    "Priority": task.priority.capitalize(),
+                }
+                for pet, task in matches
+            ]
+        )
     else:
         st.info("No tasks match those filters.")
 else:
