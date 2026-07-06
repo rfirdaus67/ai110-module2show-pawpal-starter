@@ -43,8 +43,7 @@ pip install -r requirements.txt
 7. Refine UML so it matches what you actually built.
 
 ## 🖥️ Sample Output
-
-
+```text
 --- Today's Schedule ---
  [Priority #1] Buddy: Take Buddy for a Walk! for Buddy at 8:00 am (30 min) - Not completed
  [Priority #2] Mittens: Feed Mittens her breakfast for Mittens at 9:00 am (10 min) - Not completed
@@ -80,7 +79,7 @@ pytest --cov
 Description: Tests cover "happy" cases and edge cases to test the program's sorting correctness, recurrence logic and conflict detection. Included standard cases like two tasks time frames overlapping with each other to a pet with no tasks returning an empty task list, and two tasks at the exact same time. 
 
 Sample test output: 
-```
+```text
 Ex: test_detect_conflicts_flags_overlapping_tasks
 -Supposed to confirm the Planner flags two tasks whose time windows overlap
 -Checks: conflicts = Planner().detect_conflicts([pet])
@@ -90,7 +89,7 @@ Output: tests/test_pawpal.py::test_detect_conflicts_flags_overlapping_tasks PASS
 ============================== 1 passed in 0.01s ==============================
 
 # Paste your pytest output here
-```
+
 ========================================================================= test session starts =========================================================================
 platform darwin -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
 cachedir: .pytest_cache
@@ -143,7 +142,7 @@ Example workflow: Input your info as the owner --> add your pets --> assign task
 
 Key Scheduler behaviors: Tasks are automatically shown in order of when they should occur from top to bottom, shows a conflict warning if any overlap occurs, and can filter tasks based on pet, status and priority
 
-```
+```text
 Example Output:
 
 --- Today's Schedule (by time) ---
@@ -171,4 +170,4 @@ Buddy: Take Buddy for a walk
 Mittens: Give Mittens her medicine
 ```
 
-**Screenshot or video** *(optional)*: <!-- ![alt text](task_list.png) -->
+**Screenshot or video** *(optional)*: <!-- -->
