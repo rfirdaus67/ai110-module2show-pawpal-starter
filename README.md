@@ -72,17 +72,49 @@ TOTAL DURATION (ALL PETS): 70 minutes
 
 ```bash
 # Run the full test suite:
-pytest
+python3 -m pytest -v
 
 # Run with coverage:
 pytest --cov
 ```
+Description: Tests cover "happy" cases and edge cases to test the program's sorting correctness, recurrence logic and conflict detection. Included standard cases like two tasks time frames overlapping with each other to a pet with no tasks returning an empty task list, and two tasks at the exact same time. 
 
-Sample test output:
-
+Sample test output: 
 ```
+Ex: test_detect_conflicts_flags_overlapping_tasks
+-Supposed to confirm the Planner flags two tasks whose time windows overlap
+-Checks: conflicts = Planner().detect_conflicts([pet])
+assert len(conflicts) == 1
+
+Output: tests/test_pawpal.py::test_detect_conflicts_flags_overlapping_tasks PASSED
+============================== 1 passed in 0.01s ==============================
+
 # Paste your pytest output here
 ```
+========================================================================= test session starts =========================================================================
+platform darwin -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- /Library/Frameworks/Python.framework/Versions/3.13/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/rehanafirdaus/Desktop/CodePath/ai110-project2/ai110-module2show-pawpal-starter
+plugins: anyio-4.14.1
+collected 13 items                                                                                                                                                    
+
+tests/test_pawpal.py::test_task_completion PASSED                                                                                                               [  7%]
+tests/test_pawpal.py::test_task_addition_to_pet PASSED                                                                                                          [ 15%]
+tests/test_pawpal.py::test_sort_returns_tasks_in_chronological_order PASSED                                                                                     [ 23%]
+tests/test_pawpal.py::test_sort_pet_with_no_tasks_returns_empty_list PASSED                                                                                     [ 30%]
+tests/test_pawpal.py::test_sort_keeps_both_tasks_at_identical_times PASSED                                                                                      [ 38%]
+tests/test_pawpal.py::test_completing_daily_task_creates_task_for_next_day PASSED                                                                               [ 46%]
+tests/test_pawpal.py::test_completing_weekly_task_creates_task_seven_days_later PASSED                                                                          [ 53%]
+tests/test_pawpal.py::test_completing_non_recurring_task_creates_no_new_task PASSED                                                                             [ 61%]
+tests/test_pawpal.py::test_detect_conflicts_flags_overlapping_tasks PASSED                                                                                      [ 69%]
+tests/test_pawpal.py::test_detect_conflicts_flags_duplicate_times PASSED                                                                                        [ 76%]
+tests/test_pawpal.py::test_detect_conflicts_ignores_back_to_back_tasks PASSED                                                                                   [ 84%]
+tests/test_pawpal.py::test_detect_conflicts_ignores_same_time_on_different_days PASSED                                                                          [ 92%]
+tests/test_pawpal.py::test_detect_conflicts_pet_with_no_tasks PASSED                                                                                            [100%]
+
+========================================================================= 13 passed in 0.03s ==========================================================================
+
+System Confidence: ⭐️⭐️⭐️⭐️ (4 stars out of 5)
 
 ## 📐 Smarter Scheduling
 
