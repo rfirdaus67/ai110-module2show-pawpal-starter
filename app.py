@@ -82,6 +82,7 @@ st.divider()
 st.subheader("Build Today's Schedule 🗓️")
 st.caption("Sorts all tasks by time, flags scheduling conflicts, and prints a per-pet summary.")
 
+
 # --- Conflict detection ---
 # conflict_warnings() never raises, so a bad time can't crash the app.
 # Show a warning per overlap, or a green all-clear when there are none.
